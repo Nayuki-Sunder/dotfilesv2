@@ -1,23 +1,31 @@
 return {
-  {
-    "mason-org/mason-lspconfig.nvim",
-    opts = {
-      ensure_installed = {
-        -- Remove "pyright" from this list if it's there
+  "neovim/nvim-lspconfig",
+  opts = {
+    servers = {
+      -- Ensure texlab is installed and configured
+      texlab = {
+        keys = {
+          { "<Leader>Z", "<plug>(vimtex-doc-package)", desc = "Vimtex Docs", silent = true },
+        },
+        settings = {
+          texlab = {
+            build = {
+              -- Automatically build on save (optional, since latexmk does this too)
+              onSave = true,
+            },
+            chktex = {
+              -- Enable linter for finding bugs/warnings
+              onOpenAndSave = true,
+              onEdit = true,
+            },
+            diagnostics = {
+              -- Delay in ms before showing errors
+              delay = 300,
+            },
+            formatterLineLength = 80,
+          },
+        },
       },
     },
-  },
-
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "mason-org/mason.nvim",
-    },
-    config = function()
-      local lspconfig = require("lspconfig")
-
-      -- DO NOT setup pyright via lspconfig here
-      -- If you previously had a custom pyright setup, remove it
-    end,
   },
 }

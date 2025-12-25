@@ -7,6 +7,12 @@ local opts = { noremap = true, silent = true }
 
 local M = require("util")
 
+-- Normal mode: "xx" deleshe current line to the black hole register
+
+vim.keymap.set("n", "xx", '"_dd', { desc = "Delete line without saving" })
+keymap.set("n", "x", '"_x')
+-- Visual mode: "xx" deletes the selected text to the black hole register
+vim.keymap.set("v", "xx", '"_d', { desc = "Delete selection without saving" })
 keymap.set("n", "x", '"_x')
 -- Do things without affecting the registers
 keymap.set("n", "<Leader>p", '"0p')
@@ -20,7 +26,11 @@ keymap.set("n", "<Leader>d", '"_d')
 keymap.set("n", "<Leader>D", '"_D')
 keymap.set("v", "<Leader>D", '"_D')
 keymap.set("v", "<Leader>d", '"_d')
+-- Force horizontal scroll for WSL
+keymap.set({ "n", "i", "v" }, "<S-ScrollWheelUp>", "10zh", { desc = "Scroll Left" })
+keymap.set({ "n", "i", "v" }, "<S-ScrollWheelDown>", "10zl", { desc = "Scroll Right" })
 
+-- Also map the Alt key, as Shift is sometimes "eaten" by Windows
 keymap.set("n", "<ESC>", M.save_file)
 
 -- move line up down
