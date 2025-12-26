@@ -62,3 +62,16 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.wrap = false
   end,
 })
+
+local function set_server_address()
+  local socket_path = "/tmp/nvim-socket"
+
+  -- If the socket exists, delete it (cleanup from crashes)
+  if vim.fn.filereadable(socket_path) == 1 then
+    vim.fn.delete(socket_path)
+  end
+  vim.opt.shadafile = "NONE" -- Optional: prevents shada conflicts
+  vim.fn.serverstart(socket_path)
+end
+
+set_server_address()
